@@ -49,6 +49,30 @@ function getMovies(){
     }
 }
 
+function getMovieDetail(id){
+    return async (dispatch)=>{
+        try{
+            dispatch({type:"getMovieDetailRequest"})
+            const movieDetailApi = api.get(
+                `/movie/${id}?api_key=${API_KEY}&language=en-US`
+            );
+            console.log('movieDetailApi>>',movieDetailApi)
+            let [movieDetail] = await Promise.all([
+                movieDetailApi, 
+            ]);
+            
+            dispatch({
+                type: "getMovieDetailSuccess",
+                payload: {
+                    movie: movieDetail.data,
+                }
+            })
+        }catch(error){
+            dispatch({type: "getMovieDetailFailure"})
+        }
+    }
+}
+
 export const movieAction = {
-    getMovies
+    getMovies, getMovieDetail
 }
