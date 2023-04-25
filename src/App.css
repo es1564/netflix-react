@@ -35,3 +35,23 @@
 .card:hover .overlay{
   opacity: 1;
 }
+.home-movie{
+  background-color: black;
+}
+.home-movie h1 {
+  color: white;
+}
+.product-img{
+  display: flex;
+  justify-content: flex-end;
+}
+.detail-container{
+  margin: 30px;
+}
+.detail-container div{
+  margin-bottom: 10px;
+  color: white;
+}
+ul{
+  list-style: none;
+}
