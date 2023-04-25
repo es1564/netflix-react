@@ -18,7 +18,7 @@ const MovieDetail = () => {
       console.log('movie>>>',movie)
   },[movie])
 
-  if(loading) {
+  if(loading || movie==null) {
     return <ClipLoader color="#e32636" loading={loading} size={150}/>;
   }
   return (
