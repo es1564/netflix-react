@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { movieAction } from '../redux/actions/MovieAction'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,18 +9,24 @@ import { faUsers, faStar } from '@fortawesome/free-solid-svg-icons'
 
 const MovieDetail = () => {
   let {id} = useParams();
+  const [reviewActive, setReviewActive] = useState(true);
   const dispatch = useDispatch();
-  const {movie, loading} = useSelector(state=>state.movie)
+  const {movie, movieReview, loading} = useSelector(state=>state.movie)
 
   useEffect(()=>{
       dispatch(movieAction.getMovieDetail(id))
+      dispatch(movieAction.getMovieReview(id))
   },[])
 
   useEffect(()=>{
       console.log('movie>>>',movie)
   },[movie])
 
-  if(loading || movie==null) {
+  useEffect(()=>{
+      console.log('movieReview>>>',movieReview)
+  },[movieReview])
+
+  if(loading || movie == null || movieReview == null) {
     return <ClipLoader color="#e32636" loading={loading} size={150}/>;
   }
   return (
@@ -84,6 +90,27 @@ const MovieDetail = () => {
             </div>
           </div>
         </Col>
+      </Row>
+      <Row>
+        <Button 
+          variant="danger"
+          onClick={() => setReviewActive(!reviewActive)}>
+            reviews({movieReview.results.length})
+        </Button>
+      </Row>
+      <Row>
+        {reviewActive &&
+          <div className="review">
+            <ul>
+            {movieReview.results.map((results) => (
+              <>
+                <li><h3>{results.author}</h3></li>
+                <li>{results.content}</li>
+              </>
+            ))}
+            </ul>
+          </div>
+        }
       </Row>
     </Container>
     // <div>

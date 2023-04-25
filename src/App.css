@@ -55,3 +55,6 @@
 ul{
   list-style: none;
 }
+.review li{
+  margin: 10px;
+}

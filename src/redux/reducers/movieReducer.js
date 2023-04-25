@@ -23,6 +23,7 @@ function movieReducer(state = initialState, action){
             return {...state, loading: true}
         case "getMoviesFailure":
             return {...state, loading: false}
+
         case "getMovieDetailSuccess":
             return {
                 ...state, 
@@ -33,6 +34,18 @@ function movieReducer(state = initialState, action){
             return {...state, loading: true}
         case "getMovieDetailFailure":
             return {...state, loading: false}
+
+        case "getMovieReviewSuccess":
+            return {
+                ...state, 
+                movieReview: payload.movieReview,
+                loading: false,
+            }
+        case "getMovieReviewRequest":
+            return {...state, loading: true}
+        case "getMovieReviewFailure":
+            return {...state, loading: false}
+
         default:
             return {...state}
     }

@@ -38,14 +38,6 @@ function getMovies(){
         }catch(error){
             dispatch({type: "getMoviesFailure"})
         }
-        
-        // let url = `https://api.themoviedb.org/3/movie/popular?api_key=<<api_key>>&language=en-US&page=1`
-        // let response = await fetch(url)
-        // let data = await response.json()
-
-        // let url2 = `https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1`
-    
-        // let url3 = `https://api.themoviedb.org/3/movie/upcoming?api_key=<<api_key>>&language=en-US&page=1`
     }
 }
 
@@ -73,6 +65,30 @@ function getMovieDetail(id){
     }
 }
 
+function getMovieReview(id){
+    return async (dispatch)=>{
+        try{
+            dispatch({type:"getMovieReviewRequest"})
+            const movieReviewApi = api.get(
+                `/movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+            );
+            console.log('getMovieReview>>',movieReviewApi)
+            let [movieReview] = await Promise.all([
+                movieReviewApi, 
+            ]);
+            
+            dispatch({
+                type: "getMovieReviewSuccess",
+                payload: {
+                    movieReview: movieReview.data,
+                }
+            })
+        }catch(error){
+            dispatch({type: "getMovieReviewFailure"})
+        }
+    }
+}
+
 export const movieAction = {
-    getMovies, getMovieDetail
+    getMovies, getMovieDetail, getMovieReview
 }
