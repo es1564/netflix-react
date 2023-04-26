@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { movieAction } from '../redux/actions/MovieAction'
+import { movieDetailAction } from '../redux/actions/MovieDetailAction'
 import { useDispatch, useSelector } from 'react-redux'
 import ClipLoader from "react-spinners/ClipLoader";
 import { Badge, Container, Row, Col, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faStar, faCamera, faVideoCamera, faCameraRetro } from '@fortawesome/free-solid-svg-icons'
+import MovieSlide from '../components/MovieSlide'
+import { movieRelatedResponsive } from '../components/responsive';
+import MovieCard from '../components/MovieCard';
+import { Modal } from 'react-bootstrap';
+import YouTube from 'react-youtube';
 
 const MovieDetail = () => {
   let {id} = useParams();
   const [reviewActive, setReviewActive] = useState(true);
   const dispatch = useDispatch();
-  const {movie, movieReview, loading} = useSelector(state=>state.movie)
+  const {movie, movieReview, movieRecommend, movieTrailer, loading} = useSelector(state=>state.movieDetail)
+
+  const [showTrailer, setShowTrailer] = useState(false);
+  const handleClose = () => setShowTrailer(false);
+  const handleShow = () => setShowTrailer(true);
 
   useEffect(()=>{
-      dispatch(movieAction.getMovieDetail(id))
-      dispatch(movieAction.getMovieReview(id))
+    dispatch(movieDetailAction.getMovieDetail(id))
+      // dispatch(movieAction.getMovieDetail(id))
+      // dispatch(movieAction.getMovieReview(id))
+      // dispatch(movieAction.getMovieRecommend(id))
+      // dispatch(movieAction.getMovieTrailer(id))
   },[])
 
   useEffect(()=>{
@@ -23,10 +36,16 @@ const MovieDetail = () => {
   },[movie])
 
   useEffect(()=>{
-      console.log('movieReview>>>',movieReview)
-  },[movieReview])
+      console.log('movieTrailer>>>',movieTrailer)
+      //console.log(movieTrailer.results[0].key)
+  },[movieTrailer])
 
-  if(loading || movie == null || movieReview == null) {
+  if(loading || 
+    movie == null || 
+    movieReview == null || 
+    movieRecommend == null || 
+    movieTrailer == null
+  ) {
     return <ClipLoader color="#e32636" loading={loading} size={150}/>;
   }
   return (
@@ -88,14 +107,54 @@ const MovieDetail = () => {
                 </li>
               </ul>
             </div>
+            <div>
+              <ul>
+                <li>
+                  <Button
+                    variant="outline-danger"
+                    onClick={handleShow}
+                  >
+                    <FontAwesomeIcon icon={faCamera} />  Watch Trailer
+                  </Button>
+                </li>
+              </ul>
+            </div>
           </div>
         </Col>
       </Row>
-      <Row>
-        <Button 
+
+
+      <Modal 
+        size="lg" 
+        show={showTrailer} 
+        onHide={handleClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{movie.title}  Trailer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body closeButton>
+          <YouTube 
+            videoId={movieTrailer.results[0].key} 
+            autoplay
+            width="100%"
+            height="100%"
+          />
+        </Modal.Body>
+      </Modal>
+
+
+      <Row className="detail-tab">
+        <Button
           variant="danger"
+          active={reviewActive}
           onClick={() => setReviewActive(!reviewActive)}>
             reviews({movieReview.results.length})
+        </Button>
+        <Button 
+          variant="danger"
+          active={!reviewActive}
+          onClick={() => setReviewActive(!reviewActive)}>
+            related movies({movieRecommend.results.length})
         </Button>
       </Row>
       <Row>
@@ -111,6 +170,11 @@ const MovieDetail = () => {
             </ul>
           </div>
         }
+        {!reviewActive && (
+          <div className="related-movies-container">
+            {movieRecommend.results.map(item=><MovieCard item={item} />)}
+          </div>
+        )}
       </Row>
     </Container>
     // <div>

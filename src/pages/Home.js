@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Banner from '../components/Banner'
 import MovieSlide from '../components/MovieSlide'
 import ClipLoader from "react-spinners/ClipLoader";
+import { movieHomeResponsive } from '../components/responsive'
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -23,11 +24,11 @@ return (
     <div>
         <Banner movie={popularMovies.results[0]} />
         <h1>Popular Movie</h1>
-        <MovieSlide movies={popularMovies} />
+        <MovieSlide movies={popularMovies} responsive={movieHomeResponsive}/>
         <h1>Top rated Movie</h1>
-        <MovieSlide movies={topRatedMovies} />
+        <MovieSlide movies={topRatedMovies} responsive={movieHomeResponsive}/>
         <h1>Upcoming Movie</h1>
-        <MovieSlide movies={upcomingMovies} />
+        <MovieSlide movies={upcomingMovies} responsive={movieHomeResponsive}/>
     </div>
   )
 }
