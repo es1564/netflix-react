@@ -55,10 +55,19 @@
 ul{
   list-style: none;
 }
+.review {
+  border: 3px solid white;
+}
+.review ul:not(:last-child){
+  margin: 20px;
+  padding: 10px;
+  border-bottom: 1px solid white;
+}
 .review li{
   margin: 10px;
 }
-.detail-tab button{
+.detail-tab Button{
+  margin: 5px;
 }
 .related-movies-container {
   display: flex;

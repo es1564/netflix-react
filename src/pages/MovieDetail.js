@@ -29,7 +29,7 @@ const MovieDetail = () => {
       // dispatch(movieAction.getMovieReview(id))
       // dispatch(movieAction.getMovieRecommend(id))
       // dispatch(movieAction.getMovieTrailer(id))
-  },[])
+  },[dispatch, id])
 
   useEffect(()=>{
       console.log('movie>>>',movie)
@@ -51,13 +51,13 @@ const MovieDetail = () => {
   return (
     <Container className="detail-container">
       <Row>
-        <Col className='product-img'>
+        <Col lg={5} className='product-img'>
           <img
             src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${movie.poster_path}`}
             alt=""
           />
         </Col>
-        <Col>
+        <Col lg={7}>
           <div>
             <ul>
               <h1>{movie.title}</h1>
@@ -144,37 +144,46 @@ const MovieDetail = () => {
 
 
       <Row className="detail-tab">
-        <Button
-          variant="danger"
-          active={reviewActive}
-          onClick={() => setReviewActive(!reviewActive)}>
-            reviews({movieReview.results.length})
-        </Button>
-        <Button 
-          variant="danger"
-          active={!reviewActive}
-          onClick={() => setReviewActive(!reviewActive)}>
-            related movies({movieRecommend.results.length})
-        </Button>
-      </Row>
-      <Row>
+        <div>
+          <Button
+            variant={reviewActive ? "danger" : "outline-danger"}
+            active={reviewActive}
+            onClick={() => setReviewActive(!reviewActive)}>
+              reviews({movieReview.results.length})
+          </Button>
+          <Button 
+            variant={!reviewActive ? "danger" : "outline-danger"}
+            active={!reviewActive}
+            onClick={() => setReviewActive(!reviewActive)}>
+              related movies({movieRecommend.results.length})
+          </Button>
+        </div>
+        <div>
         {reviewActive &&
           <div className="review">
+          
+          {movieReview.results.map((results) => (
             <ul>
+              <li><h3>{results.author}</h3></li>
+              <li>{results.content}</li>
+            </ul>
+          ))}
+          
+            {/* <ul>
             {movieReview.results.map((results) => (
               <>
                 <li><h3>{results.author}</h3></li>
                 <li>{results.content}</li>
               </>
             ))}
-            </ul>
+            </ul> */}
           </div>
         }
         {!reviewActive && (
           <div className="related-movies-container">
             {movieRecommend.results.map(item=><MovieCard item={item} />)}
           </div>
-        )}
+        )}</div>
       </Row>
     </Container>
     // <div>
