@@ -1,8 +1,20 @@
-import React from 'react'
-import { Navbar, Container, Form, Button, Nav, NavDropdown } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Navbar, Container, Form, Button, Nav } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navigation = () => {
+  const [search, setSearch] = useState('')
+  const navigate = useNavigate()
+
+  function searchMovie(event){
+    event.preventDefault();
+    navigate('/movies', {
+      state: {
+        search: search,
+      }
+    });
+  }
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -19,14 +31,15 @@ const Navigation = () => {
             <Link to="/" className="nav-item">Home</Link>
             <Link to="/movies" className="nav-item">Movies</Link>
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={(event)=>searchMovie(event)}>
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={(event)=>setSearch(event.target.value)}
             />
-            <Button variant="danger">Search</Button>
+            <Button type="submit" variant="danger">search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>

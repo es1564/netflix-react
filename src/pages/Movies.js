@@ -9,15 +9,35 @@ import MovieCard from '../components/MovieCard'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import MovieCardBig from '../components/MovieCardBig'
+import { useLocation } from 'react-router-dom';
+import { MovieSearchAction } from '../redux/actions/MovieSearchAction'
 
 const Movies = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const search = location?.state?.search;
   const {popularMovies, loading} = useSelector(state=>state.movie)
+  const {searchMovies, searchLoading} = useSelector(state=>state.movieSearch || {})
 
+  useEffect(()=>{
+      if(search!==undefined){
+        dispatch(MovieSearchAction.getSearchMovies(search))
+      }
+  },[search])
+
+  useEffect(()=>{
+    console.log('searchLoading>>>>>',searchLoading)
+  },[searchLoading])
 
   if(loading || 
-    popularMovies == null
+    popularMovies == null ||
+    (search !== undefined && 
+      searchLoading || (searchMovies == null || searchMovies == undefined ))
   ) {
-    return <ClipLoader color="#e32636" loading={loading} size={150}/>;
+    return <>
+            <ClipLoader color="#e32636" loading={loading} size={150} />
+            <div>No movies found</div>
+          </>
   }
   return (
     <div>
@@ -62,16 +82,18 @@ const Movies = () => {
           <Col lg={9}>
             <div>
               <Row xs={1} sm={1} md={2} lg={2} className="g-4">
-                {popularMovies.results.map(item => (
-                  <Col key={item.id}>
-                    <MovieCardBig item={item} />
-                  </Col>
-                ))}
+              {search === undefined || search == null || search == ''
+                ? popularMovies.results.map((item) => (
+                    <Col key={item.id}>
+                      <MovieCardBig item={item} />
+                    </Col>
+                  ))
+                : searchMovies?.results?.map((item) => (
+                    <Col key={item.id}>
+                      <MovieCardBig item={item} />
+                    </Col>
+                  ))}
               </Row>
-              {/* <div>
-                {popularMovies.results.map(item=><MovieCardBig item={item} />)}
-              </div> */}
-              {/* <MovieSlide movies={popularMovies} responsive={movieHomeResponsive}/> */}
             </div>
           </Col>
         </Row>
