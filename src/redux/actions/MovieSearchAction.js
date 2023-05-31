@@ -13,11 +13,12 @@ function getSearchMovies(search){
             let [searchMovies] = await Promise.all([
                 searchMovieApi, 
             ]);
-            console.log('searchMoviessearchMovies>>',searchMovies.data)
             dispatch({
                 type: "getSearchMoviesSuccess",
                 payload: {
                     searchMovies: searchMovies.data,
+                    // ...searchMovies.data,
+                    // results: sortedMovies,
                 }
             })
         }catch(error){
