@@ -62,6 +62,28 @@ const Movies = () => {
       setSortedMovies2(sortedMovies);
   }, [selectedSortOption, searchMovies?.results]);
 
+
+
+  const handleFilterYear = (year) => {
+    // Update the sorted movies based on the selected year
+    let filteredMovies = [];
+// console.log("handleFilterYear>>>",year)
+// console.log("handleFilterYear sortedMovies2>>>",sortedMovies2)
+    if (year) {
+      // Filter movies based on the selected year
+      filteredMovies = sortedMovies2.filter((movie) => {
+        const releaseYear = new Date(movie.release_date).getFullYear();
+        return releaseYear >= year.min && releaseYear <= year.max;
+      });
+    } else {
+      // No year selected, use all movies
+      filteredMovies = sortedMovies2;
+    }
+    // console.log("handleFilterYear filteredMovies2>>>",filteredMovies)
+
+    setSortedMovies2(filteredMovies);
+  };
+
   if(loading || 
     popularMovies == null ||
     (search !== undefined && 
@@ -77,7 +99,10 @@ const Movies = () => {
       <Container>
         <Row>
           <Col lg={3}>
-            <SideBar setSelectedSortOption={setSelectedSortOption} />
+            <SideBar 
+              setSelectedSortOption={setSelectedSortOption} 
+              handleFilterYear={handleFilterYear}
+            />
           </Col>
           <Col lg={9}>
             <div>
