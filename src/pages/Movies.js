@@ -84,6 +84,23 @@ const Movies = () => {
     setSortedMovies2(filteredMovies);
   };
 
+  const handleFilterGenres = (genre) => {
+    // console.log("handleFilterGenres>>>",genre)
+
+    let filteredMovies = [];
+  
+    if (genre) {
+      filteredMovies = sortedMovies2.filter((movie) => {
+        return movie.genre_ids.includes(genre);
+      });
+    } else {
+      filteredMovies = sortedMovies2;
+    }
+    // console.log("handleFilterGenres filteredMovies>>>",filteredMovies)
+  
+    setSortedMovies2(filteredMovies);
+  };
+
   if(loading || 
     popularMovies == null ||
     (search !== undefined && 
@@ -102,6 +119,7 @@ const Movies = () => {
             <SideBar 
               setSelectedSortOption={setSelectedSortOption} 
               handleFilterYear={handleFilterYear}
+              handleFilterGenres={handleFilterGenres}
             />
           </Col>
           <Col lg={9}>

@@ -4,7 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import SideFilterYear from './SideFilterYear';
 import FilterGenres from './FilterGenres';
 
-const SideBar = ({setSelectedSortOption, handleFilterYear}) => {
+const SideBar = ({setSelectedSortOption, handleFilterYear, handleFilterGenres}) => {
     return (
         <div>
             <Dropdown>
@@ -52,7 +52,7 @@ const SideBar = ({setSelectedSortOption, handleFilterYear}) => {
                 <Dropdown.Divider />
                 <Dropdown.Item><SideFilterYear handleFilterYear={handleFilterYear} /></Dropdown.Item>
                 <Dropdown.Divider />
-                <FilterGenres/>
+                <FilterGenres handleFilterGenres={handleFilterGenres}/>
                 <Dropdown.Divider />
                 <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item>
                 </Dropdown.Menu>
