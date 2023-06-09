@@ -6,6 +6,8 @@ import MovieCardBig from '../components/MovieCardBig'
 import { useLocation } from 'react-router-dom';
 import { MovieSearchAction } from '../redux/actions/MovieSearchAction'
 import SideBar from '../components/SideBar'
+import Paging from '../components/Paging';
+
 
 const Movies = () => {
   const location = useLocation();
@@ -15,6 +17,10 @@ const Movies = () => {
   const {searchMovies, searchLoading} = useSelector(state=>state.movieSearch || {})
   const [selectedSortOption, setSelectedSortOption] = useState('');
   const [sortedMovies2, setSortedMovies2] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const moviesPerPage = 10;
+  const totalMovies = sortedMovies2.length;
+  const totalPages = Math.ceil(totalMovies / moviesPerPage);
 
   useEffect(()=>{
       if(search!==undefined){
@@ -60,6 +66,7 @@ const Movies = () => {
       });
     }
       setSortedMovies2(sortedMovies);
+      setCurrentPage(1);
   }, [selectedSortOption, searchMovies?.results]);
 
 
@@ -82,6 +89,7 @@ const Movies = () => {
     // console.log("handleFilterYear filteredMovies2>>>",filteredMovies)
 
     setSortedMovies2(filteredMovies);
+    setCurrentPage(1);
   };
 
   const handleFilterGenres = (genre) => {
@@ -99,6 +107,14 @@ const Movies = () => {
     // console.log("handleFilterGenres filteredMovies>>>",filteredMovies)
   
     setSortedMovies2(filteredMovies);
+    setCurrentPage(1);
+  };
+
+  const startIndex = (currentPage - 1) * moviesPerPage;
+  const endIndex = startIndex + moviesPerPage;
+  const currentMovies = sortedMovies2.slice(startIndex, endIndex);
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   if(loading || 
@@ -125,13 +141,18 @@ const Movies = () => {
           <Col lg={9}>
             <div>
               <Row xs={1} sm={1} md={2} lg={2} className="g-4">
-                {sortedMovies2.map((item) => (
+                {currentMovies.map((item) => (
                   <Col key={item.id}>
                     <MovieCardBig item={item} />
                   </Col>
                 ))}
               </Row>
             </div>
+            <Paging
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </Col>
         </Row>
       </Container>
