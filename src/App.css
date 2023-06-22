@@ -25,6 +25,7 @@
 .card{
   width: 300px;
   height: 200px;
+  background-size: cover;
 }
 .overlay{
   opacity: 0;
@@ -52,27 +53,46 @@
   margin-bottom: 10px;
   color: white;
 }
+.detail-badge span{
+  margin-right: 5px;
+}
+.detail-info li{
+  display: inline-block; 
+  margin-right: 20px;
+}
+.eightteen{
+  font-weight: 600;
+  font-style: italic;
+}
+.detail-info-list .badge {
+  margin-right: 10px;
+  width: 100px;
+}
 ul{
   list-style: none;
 }
 .review {
   border: 3px solid white;
 }
-.review ul:not(:last-child){
+.review ul:not(:first-child){
   margin: 20px;
   padding: 10px;
-  border-bottom: 1px solid white;
+  border-top: 1px solid white;
 }
 .review li{
   margin: 10px;
 }
 .detail-tab Button{
   margin: 5px;
+  font-size: 18px;
 }
 .related-movies-container {
   display: flex;
   flex-wrap: wrap;
   margin-top: 20px;
+}
+.related-movies-container div {
+  margin: 5px;
 }
 
 .movie-card {

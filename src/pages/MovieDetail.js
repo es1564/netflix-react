@@ -62,22 +62,18 @@ const MovieDetail = () => {
             <ul>
               <h1>{movie.title}</h1>
             </ul>
-            <div>
+            <div className="detail-badge">
               <ul>
               {movie.genres.map((genres) => (
                 <Badge bg="danger">{genres.name}</Badge>
               ))}
               </ul>
             </div>
-            <div>
+            <div className="detail-info">
               <ul>
-                <li>
-                  <span><FontAwesomeIcon icon={faStar} /></span>
-                  <span>  {movie.vote_average}  </span>
-                  <span><FontAwesomeIcon icon={faUsers} /></span>
-                  <span>  {movie.popularity}  </span>
-                  <span>{movie.adult ? "청불" : "Under 18"}</span>
-                </li>
+                <li><FontAwesomeIcon icon={faStar} style={{color: "#FFD400",}} />  {movie.vote_average}</li>
+                <li><FontAwesomeIcon icon={faUsers} style={{color: "grey",}} />  {movie.popularity}</li>
+                <li>{movie.adult ? <span className="eightteen">18+</span> : <span className="eightteen" style={{color: "red",}}>Under 18</span>}</li>
               </ul>
             </div>
             <div>
@@ -87,23 +83,19 @@ const MovieDetail = () => {
                 </li>
               </ul>
             </div>
-            <div>
+            <div className="detail-info-list">
               <ul>
                 <li>
-                  <span><Badge bg="danger">budget</Badge>  </span>
-                  <span>${movie.budget}</span>
+                  <Badge bg="danger">budget</Badge>${movie.budget}
                 </li>
                 <li>
-                  <span><Badge bg="danger">revenue</Badge>  </span>
-                  <span>${movie.revenue}</span>
+                  <Badge bg="danger">revenue</Badge>${movie.revenue}
                 </li>
                 <li>
-                  <span><Badge bg="danger">Release Day</Badge>  </span>
-                  <span>{movie.release_date}</span>
+                  <Badge bg="danger">Release Day</Badge>${movie.release_date}
                 </li>
                 <li>
-                  <span><Badge bg="danger">runtime</Badge>  </span>
-                  <span>{movie.runtime}</span>
+                  <Badge bg="danger">runtime</Badge>${movie.runtime}
                 </li>
               </ul>
             </div>
@@ -168,15 +160,6 @@ const MovieDetail = () => {
               <li>{results.content}</li>
             </ul>
           ))}
-          
-            {/* <ul>
-            {movieReview.results.map((results) => (
-              <>
-                <li><h3>{results.author}</h3></li>
-                <li>{results.content}</li>
-              </>
-            ))}
-            </ul> */}
           </div>
         }
         {!reviewActive && (
