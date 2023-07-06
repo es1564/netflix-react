@@ -67,7 +67,7 @@
 }
 .product-img{
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .detail-container{
   margin: 30px;
