@@ -13,7 +13,7 @@ const FilterGenres = ({handleFilterGenres}) => {
   return (
     <div>
         <h5>Genres</h5>
-        <div>
+        <div className="genre-badge">
             {genreList.map(genre => (
                 <Button 
                     key={genre.id}

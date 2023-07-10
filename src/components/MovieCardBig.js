@@ -2,6 +2,8 @@ import React from 'react'
 import { Badge } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 const MovieCardBig = ({item}) => {
   //console.log('item>>>>>>>>',item)
@@ -35,7 +37,7 @@ const MovieCardBig = ({item}) => {
             </li>
             <li><h3>{item.title.substring(0, 20) + "..."}</h3></li>
           </ul>
-          <ul>
+          <ul className="detail-badge">
             {item.genre_ids.map((id) => (
               <Badge bg="danger">
                 {genreList.find(item => item.id == id).name}
@@ -44,8 +46,9 @@ const MovieCardBig = ({item}) => {
           </ul>
           <ul>{item.overview.substring(0, 200) + "..."}</ul>
           <ul>
-            <li>{item.vote_average}</li>
-            <li>{item.adult ? "청불" : "Under 18"}</li>
+            <li><FontAwesomeIcon icon={faStar} style={{color: "#FFD400",}} />  {item.vote_average}</li>
+            <li><FontAwesomeIcon icon={faUsers} style={{color: "grey",}} />  {item.popularity}</li>
+            <li>{item.adult ? <span className="eightteen">18+</span> : <span className="eightteen" style={{color: "red",}}>Under 18</span>}</li>
           </ul>
         </div>
         {/* <div className="movies-info">

@@ -6,9 +6,9 @@ import FilterGenres from './FilterGenres';
 
 const SideBar = ({setSelectedSortOption, handleFilterYear, handleFilterGenres}) => {
     return (
-        <div>
+        <div className="sidebar-container">
             <Dropdown>
-                <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+                <Dropdown.Toggle id="dropdown-button-dark-example1" variant="danger">
                 Sort
                 </Dropdown.Toggle>
                 <Dropdown.Menu variant="dark">
@@ -42,7 +42,7 @@ const SideBar = ({setSelectedSortOption, handleFilterYear, handleFilterGenres}) 
                 </Dropdown.Menu>
             </Dropdown>
             <Dropdown>
-                <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+                <Dropdown.Toggle id="dropdown-button-dark-example1" variant="danger">
                 Filter
                 </Dropdown.Toggle>
                 <Dropdown.Menu variant="dark">
