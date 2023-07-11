@@ -23,6 +23,14 @@ const MovieDetail = () => {
   const handleClose = () => setShowTrailer(false);
   const handleShow = () => setShowTrailer(true);
 
+  const opts = {
+    width: '100%',
+    height: '100%',
+    playerVars: {
+      autoplay: 1
+    }
+  };
+
   useEffect(()=>{
     dispatch(movieDetailAction.getMovieDetail(id))
       // dispatch(movieAction.getMovieDetail(id))
@@ -120,6 +128,7 @@ const MovieDetail = () => {
         size="lg" 
         show={showTrailer} 
         onHide={handleClose}
+        dialogClassName="trailer-modal"
       >
         <Modal.Header closeButton>
           <Modal.Title>{movie.title}  Trailer</Modal.Title>
@@ -128,9 +137,7 @@ const MovieDetail = () => {
           <div className="trailer">
             <YouTube 
               videoId={movieTrailer.results[0].key} 
-              autoplay
-              width="100%"
-              height="100%"
+              opts={opts}
             />
 
           </div>
