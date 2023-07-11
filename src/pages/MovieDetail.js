@@ -125,12 +125,15 @@ const MovieDetail = () => {
           <Modal.Title>{movie.title}  Trailer</Modal.Title>
         </Modal.Header>
         <Modal.Body closeButton>
-          <YouTube 
-            videoId={movieTrailer.results[0].key} 
-            autoplay
-            width="100%"
-            height="100%"
-          />
+          <div className="trailer">
+            <YouTube 
+              videoId={movieTrailer.results[0].key} 
+              autoplay
+              width="100%"
+              height="100%"
+            />
+
+          </div>
         </Modal.Body>
       </Modal>
 

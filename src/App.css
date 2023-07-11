@@ -209,3 +209,16 @@ ul{
 .genre-badge button{
   margin: 5px;
 }
+.trailer {
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 비율에 맞게 조정 */
+  position: relative;
+}
+
+.trailer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
